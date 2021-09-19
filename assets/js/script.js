@@ -6,6 +6,22 @@ const tasksCompletedEl = document.querySelector("#tasks-completed");
 let taskIDCounter = 0;
 let tasks = [];
 
+const loadTasks = () => {
+  savedTasks = localStorage.getItem("tasks");
+
+  if (!savedTasks) {
+    tasks = [];
+    return false;
+  }
+
+  savedTasks = JSON.parse(savedTasks);
+
+  for (let i = 0; i < savedTasks.length; i++) {
+    // pass each task object into the creatTaskEl function
+    createTaskEl(savedTasks[i]);
+  }
+};
+
 const saveTasks = () => {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 };
@@ -244,6 +260,8 @@ const deleteTask = (taskID) => {
 
   saveTasks();
 };
+
+loadTasks();
 
 formEl.addEventListener("submit", taskFormHandler);
 pageContentEl.addEventListener("click", taskButtonHandler);
