@@ -5,17 +5,20 @@ const tasksToDoEl = document.querySelector("#tasks-to-do");
 const taskFormHandler = (event) => {
   event.preventDefault();
 
-  var taskNameInput = document.querySelector("input[name='task-name']").value;
-  var taskTypeInput = document.querySelector("select[name='task-type']").value;
+  var taskNameInput = document.querySelector("input[name='task-name']");
+  var taskTypeInput = document.querySelector("select[name='task-type']");
 
   //task data in object form
   var taskDataObj = {
-      name: taskNameInput,
-      type: taskTypeInput
+      name: taskNameInput.value,
+      type: taskTypeInput.value
   };
 
   //send it as an argument to createTaskEl
   createTaskEl(taskDataObj)
+
+  taskNameInput.value = "";
+  taskTypeInput.value = "";
 };
 
 const createTaskEl = (taskDataObj) => {
