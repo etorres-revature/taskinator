@@ -74,6 +74,16 @@ const createTaskActions = (taskID) => {
   deleteButtonEl.setAttribute("data-task-id", taskID);
 
   actionContainerEl.appendChild(deleteButtonEl);
+
+  // create select dropdown to change status
+  const statusSelectEl = document.createElement("select");
+  statusSelectEl.className = "select-status";
+  statusSelectEl.setAttribute("name", "status-change");
+  statusSelectEl.setAttribute("data-task-id", taskID);
+
+  actionContainerEl.appendChild(statusSelectEl);
+
+  return actionContainerEl;
 };
 
 formEl.addEventListener("submit", taskFormHandler);
