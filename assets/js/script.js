@@ -40,31 +40,6 @@ const taskFormHandler = (event) => {
   formEl.reset();
 };
 
-const taskStatusChangeHandler = (event) => {
-  event.preventDefault();
-
-  const targetEl = event.target;
-
-  // get the task item id
-  const taskID = targetEl.getAttribute("data-task-id");
-
-  //get the currently selected option's value and convert it to lowercase
-  const statusValue = targetEl.value.toLowerCase();
-
-  // find the parent task item element based on the id
-  const taskSelected = document.querySelector(
-    ".task-item[data-task-id='" + taskID + "']"
-  );
-
-  if (statusValue === "to do") {
-    tasksToDoEl.appendChild(taskSelected);
-  } else if (statusValue === "in progress") {
-    tasksInProgressEl.appendChild(taskSelected);
-  } else if (statusValue === "task-inated!!") {
-    tasksCompletedEl.appendChild(taskSelected);
-  }
-};
-
 const createTaskEl = (taskDataObj) => {
   //create li with styling
   let listItemEl = document.createElement("li");
@@ -101,30 +76,6 @@ const createTaskEl = (taskDataObj) => {
 
   // increase task counter for next unique id
   taskIDCounter++;
-};
-
-const completeEditTask = (taskName, taskType, taskID) => {
-  // find the matching task list item
-  const taskSelected = document.querySelector(
-    ".task-item[data-task-id='" + taskID + "']"
-  );
-
-  // set new values
-  taskSelected.querySelector("h3.task-name").textContent = taskName;
-  taskSelected.querySelector("span.task-type").textContent = taskType;
-
-  // loop through tasks array and task object with new content
-  for (let i = 0; i < tasks.length; i++) {
-    if (tasks[i].id === parseInt(taskID)) {
-      tasks[i].name = taskName;
-      tasks[i].type = taskType;
-    }
-  }
-
-  alert("This task has been successfully updated...");
-
-  formEl.removeAttribute("data-task-id");
-  document.querySelector("#save-task").textContent = "TASK-inate!";
 };
 
 const createTaskActions = (taskID) => {
@@ -169,6 +120,38 @@ const createTaskActions = (taskID) => {
   return actionContainerEl;
 };
 
+const taskStatusChangeHandler = (event) => {
+  event.preventDefault();
+
+  const targetEl = event.target;
+
+  // get the task item id
+  const taskID = targetEl.getAttribute("data-task-id");
+
+  //get the currently selected option's value and convert it to lowercase
+  const statusValue = targetEl.value.toLowerCase();
+
+  // find the parent task item element based on the id
+  const taskSelected = document.querySelector(
+    ".task-item[data-task-id='" + taskID + "']"
+  );
+
+  if (statusValue === "to do") {
+    tasksToDoEl.appendChild(taskSelected);
+  } else if (statusValue === "in progress") {
+    tasksInProgressEl.appendChild(taskSelected);
+  } else if (statusValue === "task-inated!!") {
+    tasksCompletedEl.appendChild(taskSelected);
+  }
+
+  //update task's in tasks array
+  for (let i = 0; i < tasks.length; i++) {
+    if (tasks[i].id === parseInt(taskID)) {
+      tasls[i].status = statusValue;
+    }
+  }
+};
+
 const taskButtonHandler = (event) => {
   // get target element from event
   const targetEl = event.target;
@@ -203,6 +186,30 @@ const editTask = (taskID) => {
   document.querySelector("#save-task").textContent = "Re-TASK-inate";
 
   formEl.setAttribute("data-task-id", taskID);
+};
+
+const completeEditTask = (taskName, taskType, taskID) => {
+  // find the matching task list item
+  const taskSelected = document.querySelector(
+    ".task-item[data-task-id='" + taskID + "']"
+  );
+
+  // set new values
+  taskSelected.querySelector("h3.task-name").textContent = taskName;
+  taskSelected.querySelector("span.task-type").textContent = taskType;
+
+  // loop through tasks array and task object with new content
+  for (let i = 0; i < tasks.length; i++) {
+    if (tasks[i].id === parseInt(taskID)) {
+      tasks[i].name = taskName;
+      tasks[i].type = taskType;
+    }
+  }
+
+  alert("This task has been successfully updated...");
+
+  formEl.removeAttribute("data-task-id");
+  document.querySelector("#save-task").textContent = "TASK-inate!";
 };
 
 const deleteTask = (taskID) => {
