@@ -1,6 +1,8 @@
 const formEl = document.querySelector("#task-form");
 const pageContentEl = document.querySelector("#page-content");
 const tasksToDoEl = document.querySelector("#tasks-to-do");
+const tasksInProgress = document.querySelector("#tasks-in-progress");
+const tasksCompletedEl = document.querySelector("#tasks-completed");
 let taskIDCounter = 0;
 
 const taskFormHandler = (event) => {
