@@ -217,6 +217,20 @@ const deleteTask = (taskID) => {
     ".task-item[data-task-id='" + taskID + "']"
   );
   taskSelected.remove();
+
+  // create new array to hold updated list of tasks
+  const updatedTaskArr = [];
+
+  // loop through current tasks
+  for (let i = 0; i < tasks.length; i++) {
+    // if task[i].id doesn't match the value of taskID keep that task
+    if (task[i].id !== parseInt(taskID)) {
+      updatedTaskArr.push(tasks[i]);
+    }
+  }
+
+  // reassign tasks array to be the same as updatedTaskArr
+  tasks = updatedTaskArr;
 };
 
 formEl.addEventListener("submit", taskFormHandler);
