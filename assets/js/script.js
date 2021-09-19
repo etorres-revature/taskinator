@@ -19,7 +19,7 @@ const taskFormHandler = (event) => {
   // has data attribute, get task id and call func to complete edit
   if (isEdit) {
     const taskID = formEl.getAttribute("data-task-id");
-    CompleteEditTask(taskNameInput, taskTypeInput, taskID);
+    completeEditTask(taskNameInput, taskTypeInput, taskID);
   }
   // no data attribute, create object and pass to create TaskEl function
   else {
@@ -68,6 +68,22 @@ const createTaskEl = (taskDataObj) => {
 
   // increase task counter for next unique id
   taskIDCounter++;
+};
+
+const completeEditTask = (taskName, taskType, taskID) => {
+  // find the matching task list item
+  const taskSelected = document.querySelector(
+    ".task-item[data-task-id='" + taskID + "']"
+  );
+
+  // set new values
+  taskSelected.querySelector("h3.task-name").textContent = taskName;
+  taskSelected.querySelector("span.task-type").textContent = taskType;
+
+  alert("This task has been successfully updated...");
+
+  formEl.removeAttribute("data-task-id");
+  document.querySelector("#save-task").textContent = "TASK-inate!";
 };
 
 const createTaskActions = (taskID) => {
