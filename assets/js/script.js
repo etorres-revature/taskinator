@@ -104,11 +104,15 @@ const createTaskActions = (taskID) => {
 
 const taskButtonHandler = (event) => {
     if (event.target.matches(".delete-btn")){
-        console.log("delete button clicked")
 
         const taskID = event.target.getAttribute("data-task-id");
-        console.log(taskID)
+        deleteTask(taskID)
     }
+}
+
+const deleteTask = (taskID) => {
+    const taskSelected = document.querySelector(".task-item[data-task-id='"+ taskID + "']")
+    taskSelected.remove();
 }
 
 formEl.addEventListener("submit", taskFormHandler);
