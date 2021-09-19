@@ -103,6 +103,11 @@ const createTaskActions = (taskID) => {
 };
 
 const taskButtonHandler = (event) => {
+    if(event.target.matches(".edit-btn")) {
+        const taskID = event.target.getAttribute("data-task-id");
+        deleteTask(taskID)
+    }
+    
     if (event.target.matches(".delete-btn")){
 
         const taskID = event.target.getAttribute("data-task-id");
@@ -113,6 +118,10 @@ const taskButtonHandler = (event) => {
 const deleteTask = (taskID) => {
     const taskSelected = document.querySelector(".task-item[data-task-id='"+ taskID + "']")
     taskSelected.remove();
+}
+
+const editTask = (taskID) =>{
+    const taskSelected = document.querySelector(".task-item[data-task-id='"+ taskID + "']")
 }
 
 formEl.addEventListener("submit", taskFormHandler);
