@@ -1,7 +1,7 @@
 const formEl = document.querySelector("#task-form");
 const pageContentEl = document.querySelector("#page-content");
 const tasksToDoEl = document.querySelector("#tasks-to-do");
-const tasksInProgress = document.querySelector("#tasks-in-progress");
+const tasksInProgressEl = document.querySelector("#tasks-in-progress");
 const tasksCompletedEl = document.querySelector("#tasks-completed");
 let taskIDCounter = 0;
 
@@ -36,6 +36,30 @@ const taskFormHandler = (event) => {
   }
 
   formEl.reset();
+};
+
+const taskStatusChangeHandler = (event) => {
+  event.preventDefault();
+
+  const targetEl = event.target;
+
+  // get the task item id
+  const taskID = targetEl.getAttribute("data-task-id");
+
+  //get the currently selected option's value and convert it to lowercase
+  const statusValue = targetEl.value.toLowerCase();
+
+  // find the parent task item element based on the id
+  const taskSelected = document.querySelector(
+    ".task-item[data-task-id='" + taskID + "']"
+  );
+
+  if (statusValue === "to do"){
+        tasksToDoEl.appendChild(taskSelected)
+    } else if (statusValue === "in progress") {
+        tasksInProgressEl.appendChild(taskSelected)
+    } else if (statusValue === "task-inated!!") {
+        tasksCompletedEl.appendChild(taskSelected)}
 };
 
 const createTaskEl = (taskDataObj) => {
@@ -175,3 +199,4 @@ const deleteTask = (taskID) => {
 
 formEl.addEventListener("submit", taskFormHandler);
 pageContentEl.addEventListener("click", taskButtonHandler);
+pageContentEl.addEventListener("change", taskStatusChangeHandler);
