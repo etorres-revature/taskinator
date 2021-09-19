@@ -113,6 +113,14 @@ const completeEditTask = (taskName, taskType, taskID) => {
   taskSelected.querySelector("h3.task-name").textContent = taskName;
   taskSelected.querySelector("span.task-type").textContent = taskType;
 
+  // loop through tasks array and task object with new content
+  for (let i = 0; i < tasks.length; i++) {
+    if (tasks[i].id === parseInt(taskID)) {
+      tasks[i].name = taskName;
+      tasks[i].type = taskType;
+    }
+  }
+
   alert("This task has been successfully updated...");
 
   formEl.removeAttribute("data-task-id");
