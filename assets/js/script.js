@@ -1,5 +1,5 @@
 const formEl = document.querySelector("#task-form");
-const pageContentEl = document.querySelector("#page-content")
+const pageContentEl = document.querySelector("#page-content");
 const tasksToDoEl = document.querySelector("#tasks-to-do");
 let taskIDCounter = 0;
 
@@ -14,14 +14,24 @@ const taskFormHandler = (event) => {
     return false;
   }
 
-  //task data in object form
-  var taskDataObj = {
-    name: taskNameInput,
-    type: taskTypeInput,
-  };
+  let isEdit = formEl.hasAttribute("data-task-id");
 
-  //send it as an argument to createTaskEl
-  createTaskEl(taskDataObj);
+  // has data attribute, get task id and call func to complete edit
+  if (isEdit) {
+    const taskID = formEl.getAttribute("data-task-id");
+    CompleteEditTask(taskNameInput, taskTypeInput, taskID);
+  }
+  // no data attribute, create object and pass to create TaskEl function
+  else {
+    //task data in object form
+    var taskDataObj = {
+      name: taskNameInput,
+      type: taskTypeInput,
+    };
+
+    //send it as an argument to createTaskEl
+    createTaskEl(taskDataObj);
+  }
 
   formEl.reset();
 };
@@ -103,45 +113,47 @@ const createTaskActions = (taskID) => {
 };
 
 const taskButtonHandler = (event) => {
-    // get target element from event
-    const targetEl = event.target;
+  // get target element from event
+  const targetEl = event.target;
 
-    //edit button was clicked
-    if(targetEl.matches(".edit-btn")) {
-        const taskID = event.target.getAttribute("data-task-id");
-        editTask(taskID)
-    }
+  //edit button was clicked
+  if (targetEl.matches(".edit-btn")) {
+    const taskID = event.target.getAttribute("data-task-id");
+    editTask(taskID);
+  }
 
-    // delete button was clicked
-    if (targetEl.matches(".delete-btn")){
+  // delete button was clicked
+  if (targetEl.matches(".delete-btn")) {
+    const taskID = event.target.getAttribute("data-task-id");
+    deleteTask(taskID);
+  }
+};
 
-        const taskID = event.target.getAttribute("data-task-id");
-        deleteTask(taskID)
-    }
-}
+const editTask = (taskID) => {
+  // get task list element
+  const taskSelected = document.querySelector(
+    ".task-item[data-task-id='" + taskID + "']"
+  );
 
-const editTask = (taskID) =>{
-    // get task list element
-    const taskSelected = document.querySelector(".task-item[data-task-id='"+ taskID + "']")
+  //get content from task name and type
+  let taskName = taskSelected.querySelector("h3.task-name").textContent;
+  let taskType = taskSelected.querySelector("span.task-type").textContent;
 
-    //get content from task name and type
-    let taskName = taskSelected.querySelector("h3.task-name").textContent;
-    let taskType = taskSelected.querySelector("span.task-type").textContent;
+  // add value above to form
+  document.querySelector("input[name='task-name']").value = taskName;
+  document.querySelector("select[name='task-type']").value = taskType;
 
-    // add value above to form
-    document.querySelector("input[name='task-name']").value = taskName;
-    document.querySelector("select[name='task-type']").value = taskType;
+  document.querySelector("#save-task").textContent = "Re-TASK-inate";
 
-    document.querySelector("#save-task").textContent = "Save Task"
-
-    formEl.setAttribute("data-task-id", taskID)
-
-}
+  formEl.setAttribute("data-task-id", taskID);
+};
 
 const deleteTask = (taskID) => {
-    const taskSelected = document.querySelector(".task-item[data-task-id='"+ taskID + "']")
-    taskSelected.remove();
-}
+  const taskSelected = document.querySelector(
+    ".task-item[data-task-id='" + taskID + "']"
+  );
+  taskSelected.remove();
+};
 
 formEl.addEventListener("submit", taskFormHandler);
-pageContentEl.addEventListener("click", taskButtonHandler)
+pageContentEl.addEventListener("click", taskButtonHandler);
