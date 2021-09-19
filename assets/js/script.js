@@ -81,6 +81,17 @@ const createTaskActions = (taskID) => {
   statusSelectEl.setAttribute("name", "status-change");
   statusSelectEl.setAttribute("data-task-id", taskID);
 
+  const statusChoices = ["To Do", "In Progress", "TASK-inated!!"];
+
+  for (let i = 0; i < statusChoices.length; i++) {
+      let statusOptionEl = document.createElement("option");
+      statusOptionEl.textContent = statusChoices[i];
+      statusOptionEl.setAttribute("value", statusChoices[i]);
+
+      // append to select
+      statusSelectEl.appendChild(statusOptionEl)
+  }
+
   actionContainerEl.appendChild(statusSelectEl);
 
   return actionContainerEl;
