@@ -48,6 +48,11 @@ const createTaskEl = (taskDataObj) => {
 
   listItemEl.appendChild(taskInfoEl);
 
+  // ust createTaskAction to create edit/delete buttons and status change dropdown
+  const taskActionEl = createTaskActions(taskIDCounter);
+  // append the delete/edit buttons and status change dropdown
+  listItemEl.appendChild(taskActionEl);
+
   //add entire list item to list
   tasksToDoEl.append(listItemEl);
 
@@ -84,12 +89,12 @@ const createTaskActions = (taskID) => {
   const statusChoices = ["To Do", "In Progress", "TASK-inated!!"];
 
   for (let i = 0; i < statusChoices.length; i++) {
-      let statusOptionEl = document.createElement("option");
-      statusOptionEl.textContent = statusChoices[i];
-      statusOptionEl.setAttribute("value", statusChoices[i]);
+    let statusOptionEl = document.createElement("option");
+    statusOptionEl.textContent = statusChoices[i];
+    statusOptionEl.setAttribute("value", statusChoices[i]);
 
-      // append to select
-      statusSelectEl.appendChild(statusOptionEl)
+    // append to select
+    statusSelectEl.appendChild(statusOptionEl);
   }
 
   actionContainerEl.appendChild(statusSelectEl);
