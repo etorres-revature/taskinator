@@ -68,6 +68,15 @@ footer {
   border-top: 5px solid var(--primary);
 }
 
+footer p {
+  display: inline-block;
+}
+
+footer .poop {
+  display: inline-block;
+  float: right;
+}
+
 .page-title {
   color: var(--primary);
   margin-bottom: 5px;
