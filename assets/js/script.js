@@ -4,6 +4,7 @@ const tasksToDoEl = document.querySelector("#tasks-to-do");
 const tasksInProgressEl = document.querySelector("#tasks-in-progress");
 const tasksCompletedEl = document.querySelector("#tasks-completed");
 let taskIDCounter = 0;
+let tasks = [];
 
 const taskFormHandler = (event) => {
   event.preventDefault();
@@ -29,6 +30,7 @@ const taskFormHandler = (event) => {
     var taskDataObj = {
       name: taskNameInput,
       type: taskTypeInput,
+      status: "to do",
     };
 
     //send it as an argument to createTaskEl
@@ -54,12 +56,13 @@ const taskStatusChangeHandler = (event) => {
     ".task-item[data-task-id='" + taskID + "']"
   );
 
-  if (statusValue === "to do"){
-        tasksToDoEl.appendChild(taskSelected)
-    } else if (statusValue === "in progress") {
-        tasksInProgressEl.appendChild(taskSelected)
-    } else if (statusValue === "task-inated!!") {
-        tasksCompletedEl.appendChild(taskSelected)}
+  if (statusValue === "to do") {
+    tasksToDoEl.appendChild(taskSelected);
+  } else if (statusValue === "in progress") {
+    tasksInProgressEl.appendChild(taskSelected);
+  } else if (statusValue === "task-inated!!") {
+    tasksCompletedEl.appendChild(taskSelected);
+  }
 };
 
 const createTaskEl = (taskDataObj) => {
@@ -83,6 +86,10 @@ const createTaskEl = (taskDataObj) => {
     "</span>";
 
   listItemEl.appendChild(taskInfoEl);
+
+  taskDataObj.id = taskIDCounter;
+
+  tasks.push(taskDataObj);
 
   // ust createTaskAction to create edit/delete buttons and status change dropdown
   const taskActionEl = createTaskActions(taskIDCounter);
