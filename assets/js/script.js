@@ -1,5 +1,5 @@
-const buttonEl = document.querySelector("#save-task");
 const formEl = document.querySelector("#task-form");
+const pageContentEl = document.querySelector("#page-content")
 const tasksToDoEl = document.querySelector("#tasks-to-do");
 let taskIDCounter = 0;
 
@@ -102,4 +102,14 @@ const createTaskActions = (taskID) => {
   return actionContainerEl;
 };
 
+const taskButtonHandler = (event) => {
+    if (event.target.matches(".delete-btn")){
+        console.log("delete button clicked")
+
+        const taskID = event.target.getAttribute("data-task-id");
+        console.log(taskID)
+    }
+}
+
 formEl.addEventListener("submit", taskFormHandler);
+pageContentEl.addEventListener("click", taskButtonHandler)
