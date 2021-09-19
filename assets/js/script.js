@@ -6,6 +6,10 @@ const tasksCompletedEl = document.querySelector("#tasks-completed");
 let taskIDCounter = 0;
 let tasks = [];
 
+const saveTasks = () => {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+};
+
 const taskFormHandler = (event) => {
   event.preventDefault();
 
@@ -65,6 +69,8 @@ const createTaskEl = (taskDataObj) => {
   taskDataObj.id = taskIDCounter;
 
   tasks.push(taskDataObj);
+
+  saveTasks();
 
   // ust createTaskAction to create edit/delete buttons and status change dropdown
   const taskActionEl = createTaskActions(taskIDCounter);
@@ -150,6 +156,8 @@ const taskStatusChangeHandler = (event) => {
       tasls[i].status = statusValue;
     }
   }
+
+  saveTasks();
 };
 
 const taskButtonHandler = (event) => {
@@ -206,6 +214,8 @@ const completeEditTask = (taskName, taskType, taskID) => {
     }
   }
 
+  saveTasks();
+
   alert("This task has been successfully updated...");
 
   formEl.removeAttribute("data-task-id");
@@ -231,6 +241,8 @@ const deleteTask = (taskID) => {
 
   // reassign tasks array to be the same as updatedTaskArr
   tasks = updatedTaskArr;
+
+  saveTasks();
 };
 
 formEl.addEventListener("submit", taskFormHandler);
